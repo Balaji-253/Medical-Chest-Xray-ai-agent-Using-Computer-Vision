@@ -16,3 +16,6 @@ artifacts/*.log
 # Unused research model checkpoints
 artifacts/chest_xray_resnet18.pt
 artifacts/chest_xray_resnet18_v2.pt
+
+# Local backup files
+*.backup
