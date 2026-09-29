@@ -1,7 +1,6 @@
-# Project 20 — MedAgent-Vision
+# Medical-Chest-Xray-ai-agent-Using-Computer-Vision
 ## Medical AI Agent + Computer Vision Research Assistant
 
-A CPU-first research prototype combining:
 - computer-vision image quality / visual feature extraction
 - structured patient-data analysis
 - local evidence retrieval
