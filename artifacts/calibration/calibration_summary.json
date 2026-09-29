@@ -1,0 +1,8 @@
+{
+  "model": "ResNet-18 weighted baseline",
+  "classes_evaluated": 14,
+  "mean_Brier_score": 0.1619368300247115,
+  "mean_ECE": 0.273811897898625,
+  "calibration_bins": 10,
+  "note": "Calibration results are based on the current local test subset and should not be interpreted as clinical validation."
+}

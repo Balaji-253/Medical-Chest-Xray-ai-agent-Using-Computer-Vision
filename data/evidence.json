@@ -1,0 +1,138 @@
+[
+  {
+    "id": "cxr-001",
+    "title": "Chest X-ray research: Atelectasis",
+    "summary": "Atelectasis is a radiographic finding that can appear on chest imaging as increased opacity and volume-loss related changes. Automated detection should be evaluated against appropriately labeled chest radiographs.",
+    "topics": ["atelectasis", "chest xray", "radiograph", "opacity"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-002",
+    "title": "Chest X-ray research: Cardiomegaly",
+    "summary": "Cardiomegaly can be assessed using chest radiographic measurements and visual features. Automated models require independent validation before clinical use.",
+    "topics": ["cardiomegaly", "heart enlargement", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-003",
+    "title": "Chest X-ray research: Effusion",
+    "summary": "Pleural effusion is a finding that can be represented in chest radiographs. Machine-learning systems for this task should be evaluated using appropriate reference labels and independent test data.",
+    "topics": ["effusion", "pleural effusion", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-004",
+    "title": "Chest X-ray research: Infiltration",
+    "summary": "Infiltration is one of the radiographic labels represented in the NIH ChestX-ray14 dataset. Automated classification performance should be evaluated using patient-level separation and appropriate metrics.",
+    "topics": ["infiltration", "chest xray", "radiograph", "lung"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-005",
+    "title": "Chest X-ray research: Mass",
+    "summary": "Mass is a radiographic finding represented in chest X-ray datasets. Automated detection results are research signals and require validation against suitable reference standards.",
+    "topics": ["mass", "chest mass", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-006",
+    "title": "Chest X-ray research: Nodule",
+    "summary": "Pulmonary nodules can appear as focal findings on chest imaging. Computer-vision models for nodule detection require appropriate datasets, patient-level evaluation and independent validation.",
+    "topics": ["nodule", "pulmonary nodule", "lung nodule", "chest xray"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-007",
+    "title": "Chest X-ray research: Pneumonia",
+    "summary": "Pneumonia-related radiographic patterns can be studied using chest X-ray datasets. Automated predictions should be evaluated against appropriate labels and should not be treated as standalone clinical diagnoses.",
+    "topics": ["pneumonia", "chest infection", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-008",
+    "title": "Chest X-ray research: Pneumothorax",
+    "summary": "Pneumothorax is represented as a radiographic finding in chest X-ray research datasets. Automated detection systems require appropriate validation and assessment of sensitivity and specificity.",
+    "topics": ["pneumothorax", "collapsed lung", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-009",
+    "title": "Chest X-ray research: Consolidation",
+    "summary": "Pulmonary consolidation can produce increased opacity on chest radiographs. Computer-vision research should distinguish model predictions from clinically established findings.",
+    "topics": ["consolidation", "lung opacity", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-010",
+    "title": "Chest X-ray research: Edema",
+    "summary": "Pulmonary edema can be investigated using chest radiographic findings and machine-learning datasets. Model performance should be assessed using appropriate evaluation data.",
+    "topics": ["edema", "pulmonary edema", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-011",
+    "title": "Chest X-ray research: Emphysema",
+    "summary": "Emphysema is represented among the findings available in chest X-ray research datasets. Automated classification requires appropriate validation and assessment of generalization.",
+    "topics": ["emphysema", "lung disease", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-012",
+    "title": "Chest X-ray research: Fibrosis",
+    "summary": "Fibrosis is a radiographic finding represented in chest X-ray research datasets. Computer-vision predictions should be treated as research outputs until independently validated.",
+    "topics": ["fibrosis", "pulmonary fibrosis", "interstitial lung", "chest xray"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-013",
+    "title": "Chest X-ray research: Pleural thickening",
+    "summary": "Pleural thickening is represented among chest radiographic findings used in medical-imaging research. Automated detection requires suitable reference labels and independent evaluation.",
+    "topics": ["pleural thickening", "pleura", "chest xray", "radiograph"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "cxr-014",
+    "title": "Chest X-ray research: Hernia",
+    "summary": "Hernia is one of the findings represented in the NIH ChestX-ray14 research dataset. Rare-label performance requires particular attention to class imbalance and evaluation methodology.",
+    "topics": ["hernia", "chest xray", "radiograph", "class imbalance"],
+    "source": "NIH ChestX-ray14 research dataset",
+    "url": "https://nihcc.app.box.com/v/ChestXray-NIHCC"
+  },
+  {
+    "id": "ai-001",
+    "title": "Medical AI evaluation and validation",
+    "summary": "Medical AI systems should be evaluated with appropriate validation, uncertainty, robustness and human oversight.",
+    "topics": ["medical ai", "validation", "uncertainty", "human oversight"],
+    "source": "FDA AI/ML medical device research resources",
+    "url": "https://www.fda.gov/medical-devices/medical-device-regulatory-science-research-programs-conducted-osel/artificial-intelligence-program-research-aiml-based-medical-devices"
+  },
+  {
+    "id": "ai-002",
+    "title": "The Cancer Imaging Archive",
+    "summary": "TCIA provides de-identified cancer medical images and associated collections for research, subject to data-use policies.",
+    "topics": ["medical imaging", "cancer imaging", "dataset", "research"],
+    "source": "TCIA",
+    "url": "https://www.cancerimagingarchive.net/"
+  },
+  {
+    "id": "ai-003",
+    "title": "MIMIC-IV",
+    "summary": "MIMIC-IV is a large critical-care clinical database available under credentialed access and a data use agreement.",
+    "topics": ["clinical data", "critical care", "dataset", "research"],
+    "source": "PhysioNet",
+    "url": "https://physionet.org/content/mimiciv/3.1/"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "age": 54,
+  "sex": "unknown",
+  "symptoms": ["example symptom"],
+  "labs": {"example_lab": 1.0}
+}

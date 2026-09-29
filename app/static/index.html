@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical AI Research Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #0f172a;
+            color: white;
+            padding: 24px 40px;
+        }
+
+        .header h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .upload {
+            border: 2px dashed #94a3b8;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 16px;
+            cursor: pointer;
+            background: #f8fafc;
+        }
+
+        .upload:hover {
+            background: #eef2ff;
+        }
+
+        .upload input {
+            display: none;
+        }
+
+        .preview {
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            margin-top: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .status {
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .status.review {
+            background: #fff7ed;
+            color: #9a3412;
+        }
+
+        .status.ready {
+            background: #ecfdf5;
+            color: #166534;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .signal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .signal {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            background: #f8fafc;
+        }
+
+        .signal strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .probability {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f8fafc;
+        }
+
+        .positive {
+            font-weight: 700;
+        }
+
+        .evidence-item {
+            padding: 14px;
+            border-left: 4px solid #2563eb;
+            background: #f8fafc;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .evidence-item strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .evidence-item a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .gradcam {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #0f172a;
+        }
+
+        .notice {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .small {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 850px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1>Medical AI Research Assistant</h1>
+    <p>Multimodal Computer Vision & Medical AI Research Platform</p>
+</header>
+
+<div class="container">
+
+    <div class="grid">
+
+        <!-- INPUT PANEL -->
+        <div>
+
+            <div class="card">
+                <h2>Patient Information</h2>
+
+                <label for="age">Age</label>
+                <input
+                    id="age"
+                    type="number"
+                    min="0"
+                    max="120"
+                    value="50"
+                >
+
+                <label for="sex">Sex</label>
+                <select id="sex">
+                    <option value="unknown">Unknown</option>
+                    <option value="male" selected>Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="symptoms">Symptoms</label>
+                <textarea
+                    id="symptoms"
+                    placeholder="Example: cough, chest discomfort"
+                >cough, chest discomfort</textarea>
+
+                <label for="question">Research Question</label>
+                <textarea id="question">Provide a research-oriented multimodal assessment.</textarea>
+            </div>
+
+            <div class="card">
+                <h2>Chest X-ray</h2>
+
+                <label class="upload">
+                    <input
+                        id="imageInput"
+                        type="file"
+                        accept=".png,.jpg,.jpeg,.bmp,.webp"
+                    >
+                    <strong>Click to select X-ray image</strong>
+                    <div class="small">
+                        PNG, JPG, JPEG, BMP or WEBP
+                    </div>
+                </label>
+
+                <img
+                    id="preview"
+                    class="preview"
+                    alt="X-ray preview"
+                >
+
+                <label for="explainClass">
+                    Grad-CAM Explanation Class
+                </label>
+
+                <select id="explainClass">
+                    <option value="Effusion">Effusion</option>
+                    <option value="Atelectasis">Atelectasis</option>
+                    <option value="Cardiomegaly">Cardiomegaly</option>
+                    <option value="Infiltration">Infiltration</option>
+                    <option value="Mass">Mass</option>
+                    <option value="Nodule">Nodule</option>
+                    <option value="Pneumonia">Pneumonia</option>
+                    <option value="Pneumothorax">Pneumothorax</option>
+                    <option value="Consolidation">Consolidation</option>
+                    <option value="Edema">Edema</option>
+                    <option value="Emphysema">Emphysema</option>
+                    <option value="Fibrosis">Fibrosis</option>
+                    <option value="Pleural_Thickening">
+                        Pleural Thickening
+                    </option>
+                    <option value="Hernia">Hernia</option>
+                </select>
+
+                <button id="analyzeButton">
+                    Analyze Research Case
+                </button>
+            </div>
+
+        </div>
+
+        <!-- RESULTS PANEL -->
+        <div>
+
+            <div id="errorBox" class="error hidden"></div>
+
+            <div id="loadingBox" class="card loading hidden">
+                <h2>Running Medical AI Pipeline...</h2>
+                <p>
+                    Image analysis → X-ray model → evidence retrieval
+                    → Grad-CAM → safety gate
+                </p>
+            </div>
+
+            <div id="results" class="hidden">
+
+                <div id="statusBox" class="status review">
+                    HUMAN REVIEW REQUIRED
+                </div>
+
+                <div class="card">
+                    <h2>Research Assessment</h2>
+                    <p id="assessment"></p>
+
+                    <div class="notice">
+                        <strong>Research-only system.</strong><br>
+                        Model outputs are research signals and are not a
+                        diagnosis, prognosis, treatment recommendation,
+                        or clinical decision.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Patient Summary</h2>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <tbody id="patientTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Model Research Signals</h2>
+                    <div
+                        id="positiveSignals"
+                        class="signal-grid"
+                    ></div>
+                </div>
+
+                <div class="card">
+                    <h2>All Model Predictions</h2>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Label</th>
+                                    <th>Probability</th>
+                                    <th>Threshold</th>
+                                    <th>Signal</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="predictionTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Evidence Retrieval</h2>
+                    <div id="evidenceList"></div>
+                </div>
+
+                <div class="card">
+                    <h2>Grad-CAM Explanation</h2>
+
+                    <p id="gradcamInfo"></p>
+
+                    <img
+                        id="gradcamImage"
+                        class="gradcam"
+                        alt="Grad-CAM visualization"
+                    >
+                </div>
+
+                <div class="card">
+                    <h2>Safety & Human Review</h2>
+
+                    <p>
+                        <strong>Uncertainty:</strong>
+                        <span id="uncertainty"></span>
+                    </p>
+
+                    <p>
+                        <strong>Human review required:</strong>
+                        <span id="humanReview"></span>
+                    </p>
+
+                    <ul id="safetyReasons"></ul>
+                </div>
+
+                <div class="card">
+                    <h2>Request Information</h2>
+
+                    <p>
+                        <strong>Request ID:</strong>
+                        <span id="requestId"></span>
+                    </p>
+
+                    <p>
+                        <strong>Model:</strong>
+                        ResNet-18
+                    </p>
+
+                    <p>
+                        <strong>Device:</strong>
+                        CPU
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const imageInput = document.getElementById("imageInput");
+const preview = document.getElementById("preview");
+const analyzeButton = document.getElementById("analyzeButton");
+
+const results = document.getElementById("results");
+const loadingBox = document.getElementById("loadingBox");
+const errorBox = document.getElementById("errorBox");
+
+imageInput.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (!file) {
+        preview.style.display = "none";
+        return;
+    }
+
+    const url = URL.createObjectURL(file);
+
+    preview.src = url;
+    preview.style.display = "block";
+});
+
+
+analyzeButton.addEventListener("click", async function () {
+
+    const file = imageInput.files[0];
+
+    if (!file) {
+        showError("Please select a chest X-ray image first.");
+        return;
+    }
+
+    clearError();
+
+    results.classList.add("hidden");
+    loadingBox.classList.remove("hidden");
+
+    analyzeButton.disabled = true;
+    analyzeButton.textContent = "Analyzing...";
+
+    const age = document.getElementById("age").value;
+    const sex = document.getElementById("sex").value;
+    const symptoms = document.getElementById("symptoms").value;
+    const question = document.getElementById("question").value;
+    const explainClass = document.getElementById("explainClass").value;
+
+    const params = new URLSearchParams();
+
+    params.append("age", age || "0");
+    params.append("sex", sex || "unknown");
+    params.append("symptoms", symptoms);
+    params.append("question", question);
+    params.append("explain_class", explainClass);
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    try {
+
+        const response = await fetch(
+            "/agent-analyze-image?" + params.toString(),
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Medical AI analysis failed."
+            );
+        }
+
+        renderResults(data);
+
+    } catch (error) {
+
+        showError(error.message);
+
+    } finally {
+
+        loadingBox.classList.add("hidden");
+
+        analyzeButton.disabled = false;
+        analyzeButton.textContent = "Analyze Research Case";
+    }
+});
+
+
+function renderResults(data) {
+
+    results.classList.remove("hidden");
+
+    document.getElementById("assessment").textContent =
+        data.research_assessment || "";
+
+    document.getElementById("requestId").textContent =
+        data.request_id || "";
+
+    document.getElementById("uncertainty").textContent =
+        data.uncertainty ?? "N/A";
+
+    document.getElementById("humanReview").textContent =
+        data.human_review_required ? "YES" : "NO";
+
+    const statusBox = document.getElementById("statusBox");
+
+    statusBox.textContent =
+        data.status || "RESEARCH_REVIEW";
+
+    statusBox.className =
+        "status " +
+        (
+            data.human_review_required
+                ? "review"
+                : "ready"
+        );
+
+
+    renderPatient(data);
+
+    renderPredictions(data);
+
+    renderEvidence(data);
+
+    renderGradCAM(data);
+
+    renderSafety(data);
+}
+
+
+function renderPatient(data) {
+
+    const container =
+        document.getElementById("patientTable");
+
+    container.innerHTML = "";
+
+    const finding =
+        (data.findings || []).find(
+            item => item.tool === "patient"
+        );
+
+    if (!finding) {
+        container.innerHTML =
+            "<tr><td>No patient data available.</td></tr>";
+        return;
+    }
+
+    const patient = finding.findings;
+
+    const rows = [
+        ["Age", patient.age],
+        ["Sex", patient.sex],
+        ["Symptoms", patient.symptom_count],
+        ["Labs", patient.lab_count]
+    ];
+
+    rows.forEach(([key, value]) => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td><strong>${escapeHtml(key)}</strong></td>
+            <td>${escapeHtml(String(value))}</td>
+        `;
+
+        container.appendChild(row);
+    });
+}
+
+
+function renderPredictions(data) {
+
+    const modelFinding =
+        (data.findings || []).find(
+            item => item.tool === "chest_xray_model"
+        );
+
+    const positiveContainer =
+        document.getElementById("positiveSignals");
+
+    const predictionContainer =
+        document.getElementById("predictionTable");
+
+    positiveContainer.innerHTML = "";
+    predictionContainer.innerHTML = "";
+
+    if (!modelFinding) {
+        positiveContainer.innerHTML =
+            "<p>No model results available.</p>";
+        return;
+    }
+
+    const model = modelFinding.findings;
+
+    (model.positive_predictions || []).forEach(
+        prediction => {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "signal";
+
+            card.innerHTML = `
+                <strong>
+                    ${escapeHtml(prediction.label)}
+                </strong>
+
+                <div class="probability">
+                    ${Number(prediction.probability).toFixed(3)}
+                </div>
+
+                <div class="small">
+                    Threshold:
+                    ${Number(prediction.threshold).toFixed(3)}
+                </div>
+            `;
+
+            positiveContainer.appendChild(card);
+        }
+    );
+
+
+    (model.predictions || []).forEach(
+        prediction => {
+
+            const row =
+                document.createElement("tr");
+
+            const signal =
+                prediction.predicted
+                    ? "Positive research signal"
+                    : "Not thresholded";
+
+            row.innerHTML = `
+                <td>
+                    ${escapeHtml(prediction.label)}
+                </td>
+
+                <td>
+                    ${Number(prediction.probability).toFixed(4)}
+                </td>
+
+                <td>
+                    ${Number(prediction.threshold).toFixed(3)}
+                </td>
+
+                <td class="${prediction.predicted ? "positive" : ""}">
+                    ${signal}
+                </td>
+            `;
+
+            predictionContainer.appendChild(row);
+        }
+    );
+}
+
+
+function renderEvidence(data) {
+
+    const container =
+        document.getElementById("evidenceList");
+
+    container.innerHTML = "";
+
+    const evidence = data.evidence || [];
+
+    if (!evidence.length) {
+
+        container.innerHTML =
+            "<p>No matching local research references were retrieved.</p>";
+
+        return;
+    }
+
+    evidence.forEach(item => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "evidence-item";
+
+        const title =
+            escapeHtml(item.title || "Research reference");
+
+        const summary =
+            escapeHtml(item.summary || "");
+
+        const source =
+            escapeHtml(item.source || "");
+
+        div.innerHTML = `
+            <strong>${title}</strong>
+
+            <div>${summary}</div>
+
+            <div class="small">
+                Source: ${source}
+            </div>
+
+            ${
+                item.url
+                    ? `<a href="${escapeAttribute(item.url)}"
+                         target="_blank"
+                         rel="noopener noreferrer">
+                         Open research source
+                       </a>`
+                    : ""
+            }
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+
+function renderGradCAM(data) {
+
+    const finding =
+        (data.findings || []).find(
+            item => item.tool === "gradcam"
+        );
+
+    const image =
+        document.getElementById("gradcamImage");
+
+    const info =
+        document.getElementById("gradcamInfo");
+
+    if (!finding) {
+
+        image.style.display = "none";
+
+        info.textContent =
+            "No Grad-CAM explanation was generated.";
+
+        return;
+    }
+
+    const gradcam =
+        finding.findings;
+
+    info.textContent =
+        "Explanation class: " +
+        gradcam.class_name +
+        " | Model score: " +
+        Number(gradcam.model_score).toFixed(4);
+
+    image.src =
+        gradcam.image_url +
+        "?t=" +
+        Date.now();
+
+    image.style.display = "block";
+}
+
+
+function renderSafety(data) {
+
+    const container =
+        document.getElementById("safetyReasons");
+
+    container.innerHTML = "";
+
+    const finding =
+        (data.findings || []).find(
+            item => item.tool === "safety"
+        );
+
+    if (!finding) {
+        return;
+    }
+
+    const reasons =
+        finding.findings.reasons || [];
+
+    reasons.forEach(reason => {
+
+        const li =
+            document.createElement("li");
+
+        li.textContent = reason;
+
+        container.appendChild(li);
+    });
+}
+
+
+function showError(message) {
+
+    errorBox.textContent = message;
+
+    errorBox.classList.remove("hidden");
+}
+
+
+function clearError() {
+
+    errorBox.textContent = "";
+
+    errorBox.classList.add("hidden");
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+function escapeAttribute(value) {
+
+    return escapeHtml(value);
+}
+
+</script>
+
+</body>
+</html>

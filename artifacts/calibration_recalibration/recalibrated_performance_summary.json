@@ -1,0 +1,45 @@
+{
+  "model": "ResNet-18 weighted baseline",
+  "calibration_fit_split": "validation",
+  "threshold_selection_split": "validation",
+  "final_evaluation_split": "test",
+  "methods": [
+    "Original",
+    "Platt",
+    "Isotonic"
+  ],
+  "aggregate_metrics": [
+    {
+      "method": "Original",
+      "mean_AUROC": 0.640757,
+      "mean_F1": 0.162758,
+      "mean_Precision": 0.129874,
+      "mean_Sensitivity": 0.35228,
+      "mean_Specificity": 0.769732,
+      "mean_Brier": 0.161937,
+      "mean_ECE": 0.273812
+    },
+    {
+      "method": "Platt",
+      "mean_AUROC": 0.640757,
+      "mean_F1": 0.121529,
+      "mean_Precision": 0.111441,
+      "mean_Sensitivity": 0.152888,
+      "mean_Specificity": 0.918306,
+      "mean_Brier": 0.06549,
+      "mean_ECE": 0.024837
+    },
+    {
+      "method": "Isotonic",
+      "mean_AUROC": 0.627397,
+      "mean_F1": 0.162421,
+      "mean_Precision": 0.139728,
+      "mean_Sensitivity": 0.256856,
+      "mean_Specificity": 0.865714,
+      "mean_Brier": 0.066842,
+      "mean_ECE": 0.030776
+    }
+  ],
+  "note": "Calibration and decision thresholds were fitted/selected on validation data. Final metrics were computed on the untouched test prediction set.",
+  "clinical_warning": "These are research evaluation results and do not establish clinical validity."
+}

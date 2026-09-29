@@ -1,0 +1,35 @@
+{
+  "model": "ResNet-18 weighted baseline",
+  "evaluation_file": "artifacts\\evaluation\\weighted_model_test_metrics.csv",
+  "error_analysis_file": "artifacts\\error_analysis\\class_error_analysis.csv",
+  "test_classes": 14,
+  "total_test_positive_labels": 782,
+  "mean_metrics": {
+    "mean_AUROC": 0.6407572415630082,
+    "mean_F1": 0.1454922271468242,
+    "mean_Precision": 0.10707962049354784,
+    "mean_Sensitivity": 0.4308327706535549,
+    "mean_Specificity": 0.6989878677471112
+  },
+  "highest_AUROC_class": {
+    "label": "Hernia",
+    "AUROC": 0.8188798554652212
+  },
+  "lowest_AUROC_class": {
+    "label": "Nodule",
+    "AUROC": 0.4860137931034483
+  },
+  "highest_F1_class": {
+    "label": "Infiltration",
+    "F1": 0.3562152133580705
+  },
+  "highest_sensitivity_class": {
+    "label": "Nodule",
+    "Sensitivity": 0.96
+  },
+  "highest_specificity_class": {
+    "label": "Cardiomegaly",
+    "Specificity": 0.998533724340176
+  },
+  "research_warning": "These results are research evaluation results from the current local NIH ChestX-ray14 subset. They are not clinical validation or evidence of diagnostic performance in clinical practice."
+}

@@ -1,0 +1,16 @@
+{
+  "model": "ResNet-18 weighted baseline",
+  "validation_rows": 10500,
+  "test_rows": 10500,
+  "classes": 14,
+  "fitting_split": "validation",
+  "evaluation_split": "test",
+  "original_mean_Brier": 0.1619368300247115,
+  "platt_mean_Brier": 0.06548979201957479,
+  "isotonic_mean_Brier": 0.0668422607940267,
+  "original_mean_ECE": 0.273811897898625,
+  "platt_mean_ECE": 0.024837159519775148,
+  "isotonic_mean_ECE": 0.03077594142819423,
+  "methodology": "Platt and isotonic calibration were fitted on validation predictions and evaluated on the untouched test prediction set.",
+  "clinical_warning": "Calibration results are research measurements and do not establish clinical validity."
+}

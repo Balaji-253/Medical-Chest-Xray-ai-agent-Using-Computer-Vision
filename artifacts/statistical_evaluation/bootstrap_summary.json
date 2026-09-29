@@ -1,0 +1,10 @@
+{
+  "model": "ResNet-18 weighted baseline",
+  "random_seed": 42,
+  "bootstrap_iterations": 1000,
+  "confidence_level": 0.95,
+  "classes_evaluated": 14,
+  "mean_AUROC": 0.6407572415630082,
+  "mean_F1": 0.14549222714682422,
+  "note": "Bootstrap confidence intervals are statistical uncertainty estimates for the current local test subset. They do not constitute clinical validation."
+}

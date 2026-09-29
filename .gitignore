@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/raw/
+data/processed/
+*.dcm
+*.nii
+*.nii.gz
+*.mha
+*.zip
+artifacts/*.json
+artifacts/*.log
+.env
+
+# Unused research model checkpoints
+artifacts/chest_xray_resnet18.pt
+artifacts/chest_xray_resnet18_v2.pt

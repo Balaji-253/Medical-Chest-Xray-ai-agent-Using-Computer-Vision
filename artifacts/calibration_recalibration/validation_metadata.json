@@ -1,0 +1,27 @@
+{
+  "model": "ResNet-18 weighted baseline",
+  "checkpoint": "artifacts\\chest_xray_resnet18_weighted.pt",
+  "split": "validation",
+  "samples": 750,
+  "prediction_rows": 10500,
+  "classes": [
+    "Atelectasis",
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Mass",
+    "Nodule",
+    "Pneumonia",
+    "Pneumothorax",
+    "Consolidation",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Pleural_Thickening",
+    "Hernia"
+  ],
+  "device": "cpu",
+  "image_size": 224,
+  "batch_size": 16,
+  "purpose": "Validation probabilities for fitting probability recalibration without using the final test set."
+}
