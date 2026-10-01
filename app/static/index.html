@@ -3,264 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical AI Research Assistant</title>
+    <title>MedAgent | Imaging Research Console</title>
 
     <style>
-        * {
-            box-sizing: border-box;
+        :root {
+            color-scheme: light;
+            --ink: #18343a;
+            --muted: #61777b;
+            --line: #d9e4e2;
+            --paper: #f3f7f5;
+            --white: #fff;
+            --teal: #087e78;
+            --teal-dark: #075f5a;
+            --teal-pale: #e6f4f1;
+            --amber: #a75b14;
+            --amber-pale: #fff2df;
+            --red: #a33d36;
+            --shadow: 0 12px 32px rgba(24, 52, 58, .07);
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            background-color: var(--paper);
+            background-image: radial-gradient(#d8e5e1 0.7px, transparent 0.7px);
+            background-size: 18px 18px;
+            color: var(--ink);
+            font-family: "Aptos", "Segoe UI", sans-serif;
+            font-size: 14px;
+            line-height: 1.55;
         }
 
         .header {
-            background: #0f172a;
-            color: white;
-            padding: 24px 40px;
+            min-height: 78px;
+            padding: 15px max(28px, calc((100vw - 1440px) / 2));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            color: #f5fbf9;
+            background: #18343a;
+            border-bottom: 3px solid #45b5a4;
         }
 
-        .header h1 {
-            margin: 0 0 6px;
-            font-size: 28px;
-        }
-
-        .header p {
-            margin: 0;
-            color: #cbd5e1;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .grid {
+        .brand { display: flex; align-items: center; gap: 13px; }
+        .brand-mark {
+            width: 38px;
+            height: 38px;
             display: grid;
-            grid-template-columns: 380px 1fr;
-            gap: 24px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 14px;
-            padding: 24px;
-            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
-            margin-bottom: 20px;
-        }
-
-        .card h2 {
-            margin-top: 0;
+            place-items: center;
+            border: 1px solid #62c8b5;
+            color: #8ce0ce;
             font-size: 20px;
+            font-weight: 700;
+        }
+        .header h1 { margin: 0; font-size: 16px; font-weight: 650; }
+        .header p { margin: 1px 0 0; color: #adc4c1; font-size: 12px; }
+        .environment {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #c0d5d1;
+            font-size: 11px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .environment::before {
+            width: 7px;
+            height: 7px;
+            content: "";
+            border-radius: 50%;
+            background: #74d7b2;
+            box-shadow: 0 0 0 4px rgba(116, 215, 178, .13);
         }
 
-        label {
-            display: block;
-            margin-top: 16px;
-            margin-bottom: 6px;
-            font-weight: 600;
+        .container { max-width: 1440px; margin: 0 auto; padding: 28px; }
+        .page-intro {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 0 0 22px;
         }
-
-        input,
-        select,
-        textarea {
+        .eyebrow {
+            margin: 0 0 4px;
+            color: var(--teal);
+            font-size: 10px;
+            font-weight: 750;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+        .page-intro h2 { margin: 0; font-size: 25px; line-height: 1.2; font-weight: 650; }
+        .page-intro p { margin: 6px 0 0; color: var(--muted); }
+        .privacy-note {
+            max-width: 310px;
+            padding-left: 14px;
+            border-left: 2px solid #d28a45;
+            color: #76542f;
+            font-size: 12px;
+        }
+        .grid { display: grid; grid-template-columns: minmax(300px, 370px) minmax(0, 1fr); gap: 22px; align-items: start; }
+        .input-column { position: sticky; top: 18px; }
+        .card {
+            margin-bottom: 16px;
+            padding: 21px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            animation: enter .35s ease both;
+        }
+        .card h2 { margin: 0; font-size: 15px; font-weight: 700; }
+        .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
+        .section-index { color: #8aa09e; font-size: 10px; font-weight: 700; letter-spacing: .1em; }
+        label { display: block; margin: 14px 0 5px; color: #3b565a; font-size: 12px; font-weight: 650; }
+        input, select, textarea {
             width: 100%;
-            padding: 11px 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 14px;
+            min-height: 42px;
+            padding: 10px 11px;
+            border: 1px solid #cbdad7;
+            border-radius: 3px;
+            background: #fcfdfd;
+            color: var(--ink);
+            font: inherit;
+            font-size: 13px;
+            transition: border-color .16s ease, box-shadow .16s ease;
         }
-
-        textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
-
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(8, 126, 120, .12); }
+        textarea { min-height: 76px; resize: vertical; }
+        .field-row { display: grid; grid-template-columns: .7fr 1.3fr; gap: 12px; }
+        .field-row label { margin-top: 0; }
         .upload {
-            border: 2px dashed #94a3b8;
-            border-radius: 12px;
-            padding: 24px;
+            display: block;
+            margin-top: 0;
+            padding: 20px 14px;
+            border: 1px dashed #83aaa3;
+            border-radius: 4px;
+            background: #f4faf8;
+            color: var(--ink);
             text-align: center;
-            margin-top: 16px;
             cursor: pointer;
-            background: #f8fafc;
+            transition: background .16s ease, border-color .16s ease;
         }
-
-        .upload:hover {
-            background: #eef2ff;
-        }
-
-        .upload input {
-            display: none;
-        }
-
-        .preview {
-            width: 100%;
-            max-height: 350px;
-            object-fit: contain;
-            margin-top: 15px;
-            border-radius: 8px;
-            display: none;
-        }
-
+        .upload:hover, .upload:focus-within { border-color: var(--teal); background: var(--teal-pale); }
+        .upload strong { display: block; color: var(--teal-dark); font-size: 13px; }
+        .upload input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+        .small { color: var(--muted); font-size: 11px; }
+        .file-meta { margin-top: 5px; color: #3b6964; font-size: 11px; }
+        .preview { display: none; width: 100%; max-height: 260px; margin-top: 12px; border: 1px solid var(--line); border-radius: 3px; background: #13272c; object-fit: contain; }
         button {
             width: 100%;
-            margin-top: 22px;
-            padding: 13px;
-            border: none;
-            border-radius: 8px;
-            background: #2563eb;
+            min-height: 46px;
+            margin-top: 18px;
+            padding: 11px 16px;
+            border: 0;
+            border-radius: 3px;
+            background: var(--teal);
             color: white;
-            font-size: 15px;
+            font: inherit;
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
+            transition: background .16s ease, transform .16s ease;
         }
-
-        button:hover {
-            background: #1d4ed8;
-        }
-
-        button:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-        }
-
+        button:hover { background: var(--teal-dark); transform: translateY(-1px); }
+        button:focus-visible { outline: 3px solid #9edbd1; outline-offset: 2px; }
+        button:disabled { background: #839c99; cursor: wait; transform: none; }
         .status {
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 12px 15px;
+            border: 1px solid #edcc9e;
+            border-radius: 3px;
+            background: var(--amber-pale);
+            color: #83490f;
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: .07em;
         }
-
-        .status.review {
-            background: #fff7ed;
-            color: #9a3412;
-        }
-
-        .status.ready {
-            background: #ecfdf5;
-            color: #166534;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .signal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-        }
-
-        .signal {
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 14px;
-            background: #f8fafc;
-        }
-
-        .signal strong {
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .probability {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 14px;
-        }
-
-        th {
-            background: #f8fafc;
-        }
-
-        .positive {
-            font-weight: 700;
-        }
-
-        .evidence-item {
-            padding: 14px;
-            border-left: 4px solid #2563eb;
-            background: #f8fafc;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-
-        .evidence-item strong {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .evidence-item a {
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .gradcam {
-            width: 100%;
-            max-height: 500px;
-            object-fit: contain;
-            border-radius: 10px;
-            background: #0f172a;
-        }
-
+        .status::before { width: 8px; height: 8px; content: ""; border-radius: 50%; background: #c77a27; }
+        .status.ready { border-color: #b7ddd2; background: var(--teal-pale); color: var(--teal-dark); }
+        .status.ready::before { background: var(--teal); }
+        .hidden { display: none; }
+        .assessment-copy { margin: 10px 0 0; color: #455f62; line-height: 1.75; }
         .notice {
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
-            color: #92400e;
-            padding: 14px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 13px;
+            margin-top: 17px;
+            padding: 12px 14px;
+            border-left: 3px solid #cf8541;
+            background: #fff8ee;
+            color: #75542f;
+            font-size: 12px;
         }
-
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+        .signal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; }
+        .signal { padding: 13px; border: 1px solid #d7e6e2; border-top: 2px solid var(--teal); border-radius: 3px; background: #f8fbfa; }
+        .signal strong { display: block; margin-bottom: 7px; color: #36565a; font-size: 12px; }
+        .probability { color: var(--teal-dark); font-size: 23px; font-weight: 700; font-variant-numeric: tabular-nums; }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px 11px; border-bottom: 1px solid #e6eeec; text-align: left; font-size: 12px; }
+        th { background: #f4f8f7; color: #5a7274; font-size: 10px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+        td { color: #415b5e; }
+        tbody tr:last-child td { border-bottom: 0; }
+        .positive { color: var(--amber); font-weight: 700; }
+        .evidence-item { margin-bottom: 9px; padding: 13px 15px; border-left: 2px solid #67a99d; background: #f5f9f8; }
+        .evidence-item strong { display: block; margin-bottom: 4px; font-size: 13px; }
+        .evidence-item a { display: inline-block; margin-top: 6px; color: var(--teal-dark); font-size: 11px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+        .gradcam { width: 100%; max-height: 500px; border-radius: 3px; background: #152b30; object-fit: contain; }
+        .error { margin-bottom: 16px; padding: 13px 15px; border: 1px solid #e9b8b3; border-radius: 3px; background: #fff0ed; color: #8a302b; }
+        .loading { padding: 23px; border-color: #b8dcd5; background: #f4fbf9; }
+        .loading h2 { color: var(--teal-dark); }
+        .loading p { margin-bottom: 0; color: var(--muted); }
+        .empty-state {
+            min-height: 390px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            background-color: #fbfdfc;
+            background-image: linear-gradient(rgba(8, 126, 120, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(8, 126, 120, .035) 1px, transparent 1px);
+            background-size: 28px 28px;
         }
+        .empty-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 13px; border-bottom: 1px solid var(--line); }
+        .idle-badge { padding: 3px 8px; border: 1px solid #c6dcd6; border-radius: 2px; color: var(--teal-dark); font-size: 9px; font-weight: 750; letter-spacing: .1em; }
+        .empty-main { display: flex; align-items: center; justify-content: space-between; gap: 22px; padding: 28px 8px; }
+        .empty-copy { max-width: 420px; }
+        .empty-copy h2 { font-size: 23px; }
+        .empty-copy p:last-child { max-width: 360px; margin: 8px 0 0; color: var(--muted); }
+        .empty-mark { flex: 0 0 auto; width: 108px; height: 108px; display: grid; place-items: center; border: 1px solid #b9d3cd; color: #358a80; font-size: 25px; font-weight: 700; letter-spacing: .08em; background: rgba(255, 255, 255, .75); }
+        .stage-list { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+        .stage-item { padding: 13px 10px 0 0; color: #496366; font-size: 11px; }
+        .stage-item span { display: block; margin-top: 4px; color: #859997; font-size: 9px; font-weight: 700; letter-spacing: .1em; }
+        .evaluation-section { margin-top: 30px; padding-top: 22px; border-top: 1px solid #cbdad7; }
+        .evaluation-header { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 14px; }
+        .evaluation-header h2 { margin: 0; font-size: 17px; }
+        .evaluation-header p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+        .offline-label { flex: 0 0 auto; padding: 5px 8px; border: 1px solid #d7c6a8; color: #79552e; font-size: 9px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+        .evaluation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .evaluation-figure { min-width: 0; margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 4px; background: white; box-shadow: var(--shadow); }
+        .evaluation-figure a { display: block; overflow: hidden; border: 1px solid #e3ece9; background: #fff; }
+        .evaluation-figure img { display: block; width: 100%; aspect-ratio: 1.62; object-fit: contain; transition: transform .2s ease; }
+        .evaluation-figure a:hover img { transform: scale(1.015); }
+        .evaluation-figure figcaption { display: flex; justify-content: space-between; gap: 12px; padding-top: 10px; color: #36565a; font-size: 12px; font-weight: 700; }
+        .evaluation-figure figcaption span { color: var(--muted); font-size: 10px; font-weight: 500; text-align: right; }
+        .evaluation-caveat { margin: 12px 0 0; color: #748987; font-size: 11px; }
+        .small + .small { margin-top: 4px; }
+        #safetyReasons { padding-left: 18px; color: #536b6e; }
+        #results > .card:nth-of-type(2) { animation-delay: .04s; }
 
-        .loading {
-            text-align: center;
-            padding: 30px;
+        @keyframes enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 920px) {
+            .container { padding: 22px; }
+            .grid { grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr); gap: 14px; }
+            .card { padding: 17px; }
         }
-
-        .small {
-            color: #64748b;
-            font-size: 13px;
+        @media (max-width: 720px) {
+            .header { min-height: 68px; padding: 12px 18px; }
+            .environment { font-size: 0; }
+            .environment::before { width: 9px; height: 9px; }
+            .container { padding: 20px 15px; }
+            .page-intro { display: block; margin-bottom: 17px; }
+            .page-intro h2 { font-size: 22px; }
+            .privacy-note { max-width: none; margin-top: 13px; }
+            .grid { grid-template-columns: 1fr; }
+            .input-column { position: static; }
+            .evaluation-header { align-items: start; flex-direction: column; gap: 10px; }
+            .evaluation-grid { grid-template-columns: 1fr; }
+            .evaluation-figure img { aspect-ratio: 1.45; }
         }
-
-        @media (max-width: 850px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header {
-                padding: 20px;
-            }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
@@ -268,36 +283,53 @@
 <body>
 
 <header class="header">
-    <h1>Medical AI Research Assistant</h1>
-    <p>Multimodal Computer Vision & Medical AI Research Platform</p>
+    <div class="brand">
+        <div class="brand-mark" aria-hidden="true">M</div>
+        <div>
+            <h1>MedAgent Imaging</h1>
+            <p>Multimodal research console</p>
+        </div>
+    </div>
+    <div class="environment">Research environment</div>
 </header>
 
 <div class="container">
 
+    <section class="page-intro" aria-labelledby="pageTitle">
+        <div>
+            <p class="eyebrow">Imaging workspace / 01</p>
+            <h2 id="pageTitle">New research case</h2>
+            <p>Review image-model signals alongside structured case context.</p>
+        </div>
+        <div class="privacy-note">De-identify all information before use. This research system is not for clinical decisions.</div>
+    </section>
+
     <div class="grid">
 
         <!-- INPUT PANEL -->
-        <div>
+        <div class="input-column">
 
             <div class="card">
-                <h2>Patient Information</h2>
+                <div class="section-heading">
+                    <h2>Case context</h2>
+                    <span class="section-index">01 / INPUT</span>
+                </div>
 
-                <label for="age">Age</label>
-                <input
-                    id="age"
-                    type="number"
-                    min="0"
-                    max="120"
-                    value="50"
-                >
-
-                <label for="sex">Sex</label>
-                <select id="sex">
-                    <option value="unknown">Unknown</option>
-                    <option value="male" selected>Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
+                <div class="field-row">
+                    <div>
+                        <label for="age">Age</label>
+                        <input id="age" type="number" min="0" max="120" value="50">
+                    </div>
+                    <div>
+                        <label for="sex">Sex</label>
+                        <select id="sex">
+                            <option value="unknown">Unknown</option>
+                            <option value="male" selected>Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
 
                 <label for="symptoms">Symptoms</label>
                 <textarea
@@ -310,7 +342,10 @@
             </div>
 
             <div class="card">
-                <h2>Chest X-ray</h2>
+                <div class="section-heading">
+                    <h2>Image input</h2>
+                    <span class="section-index">02 / IMAGE</span>
+                </div>
 
                 <label class="upload">
                     <input
@@ -318,10 +353,11 @@
                         type="file"
                         accept=".png,.jpg,.jpeg,.bmp,.webp"
                     >
-                    <strong>Click to select X-ray image</strong>
+                    <strong>Select chest X-ray image</strong>
                     <div class="small">
-                        PNG, JPG, JPEG, BMP or WEBP
+                        Choose file · PNG, JPG, BMP, WEBP · max 20 MB
                     </div>
+                    <div id="fileName" class="file-meta" aria-live="polite">No image selected</div>
                 </label>
 
                 <img
@@ -331,7 +367,7 @@
                 >
 
                 <label for="explainClass">
-                    Grad-CAM Explanation Class
+                    Grad-CAM target label
                 </label>
 
                 <select id="explainClass">
@@ -354,7 +390,7 @@
                 </select>
 
                 <button id="analyzeButton">
-                    Analyze Research Case
+                    Run multimodal analysis
                 </button>
             </div>
 
@@ -362,6 +398,26 @@
 
         <!-- RESULTS PANEL -->
         <div>
+
+            <section id="emptyState" class="card empty-state" aria-label="Analysis workspace status">
+                <div class="empty-head">
+                    <span class="section-index">SESSION OUTPUT</span>
+                    <span class="idle-badge">READY</span>
+                </div>
+                <div class="empty-main">
+                    <div class="empty-copy">
+                        <p class="eyebrow">No run in progress</p>
+                        <h2>Analysis workspace ready</h2>
+                        <p>Results, model signals, and supporting evidence will appear here after analysis.</p>
+                    </div>
+                    <div class="empty-mark" aria-hidden="true">XR</div>
+                </div>
+                <div class="stage-list" aria-label="Analysis stages">
+                    <div class="stage-item">Image model<span>WAITING</span></div>
+                    <div class="stage-item">Evidence retrieval<span>WAITING</span></div>
+                    <div class="stage-item">Safety review<span>WAITING</span></div>
+                </div>
+            </section>
 
             <div id="errorBox" class="error hidden"></div>
 
@@ -380,8 +436,11 @@
                 </div>
 
                 <div class="card">
-                    <h2>Research Assessment</h2>
-                    <p id="assessment"></p>
+                    <div class="section-heading">
+                        <h2>Research assessment</h2>
+                        <span class="section-index">01 / SUMMARY</span>
+                    </div>
+                    <p id="assessment" class="assessment-copy"></p>
 
                     <div class="notice">
                         <strong>Research-only system.</strong><br>
@@ -392,7 +451,10 @@
                 </div>
 
                 <div class="card">
-                    <h2>Patient Summary</h2>
+                    <div class="section-heading">
+                        <h2>Case summary</h2>
+                        <span class="section-index">02 / CONTEXT</span>
+                    </div>
 
                     <div class="table-wrapper">
                         <table>
@@ -402,7 +464,10 @@
                 </div>
 
                 <div class="card">
-                    <h2>Model Research Signals</h2>
+                    <div class="section-heading">
+                        <h2>Thresholded model signals</h2>
+                        <span class="section-index">03 / MODEL</span>
+                    </div>
                     <div
                         id="positiveSignals"
                         class="signal-grid"
@@ -410,7 +475,10 @@
                 </div>
 
                 <div class="card">
-                    <h2>All Model Predictions</h2>
+                    <div class="section-heading">
+                        <h2>All model predictions</h2>
+                        <span class="section-index">04 / MODEL</span>
+                    </div>
 
                     <div class="table-wrapper">
                         <table>
@@ -429,12 +497,18 @@
                 </div>
 
                 <div class="card">
-                    <h2>Evidence Retrieval</h2>
+                    <div class="section-heading">
+                        <h2>Retrieved evidence</h2>
+                        <span class="section-index">05 / REFERENCES</span>
+                    </div>
                     <div id="evidenceList"></div>
                 </div>
 
                 <div class="card">
-                    <h2>Grad-CAM Explanation</h2>
+                    <div class="section-heading">
+                        <h2>Grad-CAM explanation</h2>
+                        <span class="section-index">06 / EXPLAINABILITY</span>
+                    </div>
 
                     <p id="gradcamInfo"></p>
 
@@ -446,7 +520,10 @@
                 </div>
 
                 <div class="card">
-                    <h2>Safety & Human Review</h2>
+                    <div class="section-heading">
+                        <h2>Safety and review</h2>
+                        <span class="section-index">07 / OVERSIGHT</span>
+                    </div>
 
                     <p>
                         <strong>Uncertainty:</strong>
@@ -462,7 +539,10 @@
                 </div>
 
                 <div class="card">
-                    <h2>Request Information</h2>
+                    <div class="section-heading">
+                        <h2>Run metadata</h2>
+                        <span class="section-index">08 / SYSTEM</span>
+                    </div>
 
                     <p>
                         <strong>Request ID:</strong>
@@ -486,6 +566,34 @@
 
     </div>
 
+    <section class="evaluation-section" aria-labelledby="evaluationTitle">
+        <div class="evaluation-header">
+            <div>
+                <p class="eyebrow">Model review / offline artifacts</p>
+                <h2 id="evaluationTitle">Evaluation snapshots</h2>
+                <p>Repository evaluation plots for research review, not results from the current case.</p>
+            </div>
+            <span class="offline-label">Offline evaluation</span>
+        </div>
+
+        <div class="evaluation-grid">
+            <figure class="evaluation-figure">
+                <a href="/artifacts/evaluation_dashboard/plots/auroc_by_class.png" target="_blank" rel="noopener noreferrer" aria-label="Open AUROC by disease class chart at full size">
+                    <img src="/artifacts/evaluation_dashboard/plots/auroc_by_class.png" alt="Horizontal bar chart showing AUROC by disease class from an offline model evaluation." loading="lazy" decoding="async">
+                </a>
+                <figcaption>AUROC by class <span>Discrimination metric</span></figcaption>
+            </figure>
+
+            <figure class="evaluation-figure">
+                <a href="/artifacts/evaluation_dashboard/plots/f1_by_class.png" target="_blank" rel="noopener noreferrer" aria-label="Open F1 score by disease class chart at full size">
+                    <img src="/artifacts/evaluation_dashboard/plots/f1_by_class.png" alt="Horizontal bar chart showing F1 score by disease class from an offline model evaluation." loading="lazy" decoding="async">
+                </a>
+                <figcaption>F1 score by class <span>Threshold-dependent metric</span></figcaption>
+            </figure>
+        </div>
+        <p class="evaluation-caveat">Interpret these figures with their dataset, split, and evaluation methodology. They do not establish external validity or clinical performance.</p>
+    </section>
+
 </div>
 
 <script>
@@ -493,24 +601,35 @@
 const imageInput = document.getElementById("imageInput");
 const preview = document.getElementById("preview");
 const analyzeButton = document.getElementById("analyzeButton");
+const fileName = document.getElementById("fileName");
+let previewUrl = null;
 
 const results = document.getElementById("results");
 const loadingBox = document.getElementById("loadingBox");
 const errorBox = document.getElementById("errorBox");
+const emptyState = document.getElementById("emptyState");
 
 imageInput.addEventListener("change", function () {
 
     const file = this.files[0];
 
+    if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        previewUrl = null;
+    }
+
     if (!file) {
         preview.style.display = "none";
+        fileName.textContent = "No image selected";
         return;
     }
 
-    const url = URL.createObjectURL(file);
+    previewUrl = URL.createObjectURL(file);
 
-    preview.src = url;
+    preview.src = previewUrl;
+    preview.alt = "Preview of " + file.name;
     preview.style.display = "block";
+    fileName.textContent = file.name;
 });
 
 
@@ -526,10 +645,11 @@ analyzeButton.addEventListener("click", async function () {
     clearError();
 
     results.classList.add("hidden");
+    emptyState.classList.add("hidden");
     loadingBox.classList.remove("hidden");
 
     analyzeButton.disabled = true;
-    analyzeButton.textContent = "Analyzing...";
+    analyzeButton.textContent = "Analysis in progress...";
 
     const age = document.getElementById("age").value;
     const sex = document.getElementById("sex").value;
@@ -572,13 +692,14 @@ analyzeButton.addEventListener("click", async function () {
     } catch (error) {
 
         showError(error.message);
+        emptyState.classList.remove("hidden");
 
     } finally {
 
         loadingBox.classList.add("hidden");
 
         analyzeButton.disabled = false;
-        analyzeButton.textContent = "Analyze Research Case";
+        analyzeButton.textContent = "Run multimodal analysis";
     }
 });
 
@@ -586,6 +707,7 @@ analyzeButton.addEventListener("click", async function () {
 function renderResults(data) {
 
     results.classList.remove("hidden");
+    emptyState.classList.add("hidden");
 
     document.getElementById("assessment").textContent =
         data.research_assessment || "";
